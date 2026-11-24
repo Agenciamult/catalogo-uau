@@ -153,7 +153,8 @@ const EXEC = [
 ["24/11","ACCIOLY","VILA ISABEL","DISPLAY",20,"Aprovada"],
 ["24/11","CADU MIGUEZ","SÃO GONÇALO","DISPLAY",20,"Aprovada"],
 ["24/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"],
-["24/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"]
+["24/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"],
+["24/11","VANIA","RIO DO A","CROSS",10,"Pendente"]
 ];
 // Participantes ainda sem pontos (aparecem com 0)
 const OTHERS = ["ANDERSON","ANDRE","CARLOS JOSÉ","FELIPE","JORGE","NEUZELI","ALEX","VANIA"];
@@ -204,7 +205,7 @@ document.getElementById("rank").innerHTML = all.map((o,i)=>{
   if(o.pos===1 && o.pts>0) next = second ? `Liderando! ${o.pts-second.pts} pts à frente do 2º` : "Liderando!";
   else if(above) next = `Faltam ${above.pts-o.pts+1} pts pra passar o ${above.pos}º lugar`;
   else next = "Faça a 1ª execução e entre na disputa!";
-  const rows = o.list.length ? `<table>${o.list.map(r=>`<tr><td>${esc(r[0])} · ${esc(title(r[1]))} · ${esc(title(r[2]))}${r[4]!=="Aprovada"?" ("+esc(r[4])+")":""}</td><td>+${r[3]}</td></tr>`).join("")}</table>` : "Nenhuma execução ainda. Bora pontuar!";
+  const rows = o.list.length ? `<table>${o.list.map(r=>`<tr><td>${esc(r[0])} · ${esc(title(r[1]))} · ${esc(title(r[2]))}${r[4]!=="Aprovada"?" ("+(r[4]==="Pendente"?"em análise":esc(r[4]))+")":""}</td><td>${r[4]==="Aprovada"?"+"+r[3]:"—"}</td></tr>`).join("")}</table>` : "Nenhuma execução ainda. Bora pontuar!";
   return `<li><button aria-expanded="false" aria-controls="d${i}" id="b${i}">
     <span class="pos">${o.pos}º</span>
     <span class="who"><b>${esc(title(o.name))}</b><span class="lvl ${M[1]}">${M[0]}</span>
