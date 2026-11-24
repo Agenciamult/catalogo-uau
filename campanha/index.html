@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campanha Desengordurante UAU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: placar de campanha de loja, animado e direto, pra promotor ver no celular
+IDEA: placar de gincana / painel de pontos de ponta de gôndola
+PICTURE: pódio com os 3 primeiros + barra de dias da campanha
+COLOUR and TYPE: azul UAU dominante, amarelo de apoio, verde-limão de destaque; Baloo 2 + Nunito Sans
+LAYOUT: coluna única mobile-first; pódio, ranking com níveis, regras, histórico
+*/
+:root{color-scheme:light dark;
+--bg:light-dark(#f4f7ff,#08142e);--card:light-dark(#ffffff,#102247);--ink:light-dark(#0c1a3a,#eef3ff);--mute:light-dark(#53607e,#a9b6d6);
+--blue:#1546c9;--deep:#0b2a80;--yel:#ffd21f;--lime:#7ee04a;--line:light-dark(#dfe6f5,#1f3666)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Nunito Sans",system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(160deg,var(--blue),var(--deep));color:#fff;padding:28px 0 150px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#ffffff22,transparent 70%)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.logo{display:inline-flex}
+.logo img{display:block;height:46px;width:auto;filter:drop-shadow(0 1px 2px #0006)}
+footer .cred{font-weight:800;color:var(--ink);margin-bottom:4px}
+.brand{display:inline-block;background:var(--yel);color:var(--deep);font:800 14px "Baloo 2",sans-serif;padding:2px 12px;border-radius:99px}
+h1{font:800 clamp(32px,8vw,48px)/1.02 "Baloo 2",sans-serif;margin:10px 0 6px;text-wrap:balance}
+.sub{margin:0;color:#d8e3ff;font-size:16px}
+.days{margin-top:18px;background:#ffffff1f;border-radius:14px;padding:12px 14px}
+.days .row{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:700}
+.bar{height:10px;background:#ffffff30;border-radius:99px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--yel);border-radius:99px}
+.podium{margin-top:-130px;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:10px}
+.step{text-align:center}
+.av{width:58px;height:58px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font:800 22px "Baloo 2",sans-serif;background:var(--card);color:var(--blue);border:4px solid var(--yel);box-shadow:0 6px 16px #0b2a8040}
+.step .nm{font-weight:800;background:var(--card);border-radius:99px;padding:2px 8px;display:inline-block;font-size:14px;line-height:1.2;overflow-wrap:anywhere}
+.step .pt{font:800 20px "Baloo 2",sans-serif;color:var(--blue);background:var(--card);border-radius:99px;padding:0 10px;display:inline-block;margin-top:4px}
+:root[data-theme=dark] .step .pt{color:var(--yel)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .step .pt{color:var(--yel)}}
+.block{margin-top:8px;border-radius:14px 14px 6px 6px;background:linear-gradient(180deg,var(--yel),#f4b400);color:var(--deep);font:800 28px "Baloo 2",sans-serif;display:grid;place-items:center}
+.s1 .block{height:110px}.s2 .block{height:80px}.s3 .block{height:60px}
+.s1 .av{width:70px;height:70px;font-size:26px}
+.empty{opacity:.45}
+h2{font:800 26px/1.1 "Baloo 2",sans-serif;margin:34px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.rank{list-style:none;margin:0;padding:0}
+.rank li{border-bottom:1px solid var(--line)}
+.rank li:last-child{border-bottom:0}
+.rank button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;padding:12px 14px;cursor:pointer;min-height:56px}
+.rank button:focus-visible{outline:3px solid var(--yel);outline-offset:-3px;border-radius:12px}
+.pos{font:800 20px "Baloo 2",sans-serif;color:var(--mute);text-align:center}
+.who b{display:block;font-size:16px}
+.lvl{display:inline-block;font-size:13px;font-weight:800;padding:1px 9px;border-radius:99px;margin-top:2px}
+.prog{display:block;height:6px;background:var(--line);border-radius:99px;margin-top:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--lime);border-radius:99px}
+.next{display:block;font-size:13px;color:var(--mute);margin-top:3px}
+.pts{font:800 24px "Baloo 2",sans-serif;text-align:right;white-space:nowrap}
+.pts small{font:700 13px "Nunito Sans",sans-serif;color:var(--mute)}
+.det{padding:0 14px 14px 58px;font-size:14px;color:var(--mute)}
+.det table{width:100%;border-collapse:collapse}
+.det td{padding:3px 0;border-bottom:1px dashed var(--line)}
+.det td:last-child{text-align:right;font-weight:800;color:var(--ink);white-space:nowrap}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rule{padding:14px}
+.rule .v{font:800 30px/1 "Baloo 2",sans-serif;color:var(--blue)}
+:root[data-theme=dark] .rule .v{color:var(--yel)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .rule .v{color:var(--yel)}}
+.rule .k{font-weight:800}
+.levels{display:flex;flex-wrap:wrap;gap:8px}
+.levels span{padding:6px 12px;border-radius:99px;font-weight:800;font-size:14px}
+.L0{background:#e8ecf5;color:#4b5672}.L1{background:#f2d3b5;color:#6b3a10}.L2{background:#dfe5ee;color:#2f3d55}.L3{background:#ffe27a;color:#5a4300}.L4{background:#c9f0ff;color:#08516b}
+.bonus{margin-top:12px;padding:14px;background:var(--yel);color:var(--deep);border:0}
+.bonus b{font-family:"Baloo 2",sans-serif;font-size:20px}
+.how{padding:14px 18px;margin:0}
+.how li{margin:4px 0}
+footer{padding:30px 0 40px;font-size:13px;color:var(--mute);text-align:center}
+@media(max-width:420px){.rules{grid-template-columns:minmax(0,1fr)}.det{padding-left:14px}}
+@media(prefers-reduced-motion:no-preference){.bar i,.prog i{animation:grow 1s ease-out}@keyframes grow{from{width:0}}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top"><span class="logo"><img src="logo.png" alt="Agência Mult" width="113" height="46"></span><span class="brand">UAU Ingleza · Guanabara</span></div>
+    <h1>Campanha Desengordurante UAU</h1>
+    <p class="sub">Monte ponto extra, mande a foto com a senha do dia e suba no ranking!</p>
+    <div class="days">
+      <div class="row"><span id="dTxt"></span><span>19/11 a 08/12</span></div>
+      <div class="bar"><i id="dBar"></i></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="podium" id="podium" aria-label="Pódio"></section>
+
+  <h2>Ranking</h2>
+  <ul class="rank card" id="rank"></ul>
+
+  <h2>Como pontuar</h2>
+  <div class="rules">
+    <div class="card rule"><div class="v">10 pts</div><div class="k">Cross merchandising</div></div>
+    <div class="card rule"><div class="v">20 pts</div><div class="k">Ponto extra 2+ prateleiras</div></div>
+    <div class="card rule"><div class="v">20 pts</div><div class="k">Display completo</div></div>
+    <div class="card rule"><div class="v">50 pts</div><div class="k">Ilha completa</div></div>
+  </div>
+  <div class="card bonus"><b>Bônus R$ 100,00</b><br>Pro promotor da loja com o maior aumento de vendas comparado ao mesmo período do mês anterior.</div>
+
+
+  <h2>Como participar</h2>
+  <ol class="card how">
+    <li>Monte o ponto extra na loja.</li>
+    <li>Tire foto mostrando bem a execução, com a <b>senha do dia</b> visível.</li>
+    <li>Mande no grupo com nome da loja + tipo de execução.</li>
+    <li>Só conta ponto de foto aprovada.</li>
+  </ol>
+</main>
+<footer><div class="cred">Campanha idealizada pela coordenadora Gabriella do Bem · Agência Mult</div><div id="upd"></div></footer>
+
+<script>
+{
+const UPDATED = "24/11/2026";
+const START = new Date(2026,10,19), END = new Date(2026,11,8);
+// Execuções da aba CAMPANHA DESENGORDURANTE: [data, promotor, loja, tipo, pontos, status]
+const EXEC = [
+["19/11","CADU MIGUEZ","SÃO GONÇALO","DISPLAY",20,"Aprovada"],
+["19/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"],
+["19/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"],
+["19/11","ACCIOLY","VILA ISABEL","DISPLAY",20,"Aprovada"],
+["23/11","CADU MIGUEZ","SÃO GONÇALO","DISPLAY",20,"Aprovada"],
+["23/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"],
+["23/11","CADU MIGUEZ","SÃO GONÇALO","CROSS",10,"Aprovada"],
+["23/11","ACCIOLY","VILA ISABEL","DISPLAY",20,"Aprovada"],
+["23/11","RAQUEL","CAXIAS","CROSS",10,"Aprovada"],
+["24/11","ACCIOLY","VILA ISABEL","DISPLAY",20,"Aprovada"]
+];
+// Participantes ainda sem pontos (aparecem com 0)
+const OTHERS = ["ANDERSON","ANDRE","CARLOS JOSÉ","FELIPE","JORGE","NEUZELI","ALEX","RODRIGO","VANIA"];
+const MEDAL = {1:["Ouro","L3"],2:["Prata","L2"],3:["Bronze","L1"]};
+
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const title = s => s.toLowerCase().replace(/(^|\s)\S/g,m=>m.toUpperCase());
+
+const map = {};
+EXEC.forEach(([d,p,l,t,pts,st])=>{
+  const o = map[p] ||= {name:p, pts:0, n:0, pend:0, list:[], lojas:new Set()};
+  o.lojas.add(l);
+  if(st==="Aprovada"){ o.pts+=pts; o.n++; }
+  else if(st==="Pendente") o.pend++;
+  o.list.push([d,l,t,st==="Aprovada"?pts:0,st]);
+});
+OTHERS.forEach(n=>{ if(!map[n]) map[n]={name:n,pts:0,n:0,pend:0,list:[],lojas:new Set()}; });
+const all = Object.values(map).sort((a,b)=>b.pts-a.pts||b.n-a.n||a.name.localeCompare(b.name));
+
+// posição com empate
+let last=null, pos=0;
+all.forEach((o,i)=>{ if(o.pts!==last){pos=i+1; last=o.pts;} o.pos=pos; });
+
+// dias
+const today = new Date(); today.setHours(0,0,0,0);
+const total = Math.round((END-START)/864e5)+1;
+const gone = Math.min(total, Math.max(0, Math.round((today-START)/864e5)+1));
+const left = total-gone;
+document.getElementById("dTxt").textContent = today>END ? "Campanha encerrada" : today<START ? "Começa em breve" : `Dia ${gone} de ${total} · faltam ${left} dias`;
+document.getElementById("dBar").style.width = (gone/total*100)+"%";
+
+// pódio
+const top = all.filter(o=>o.pts>0).slice(0,3);
+const order = [[top[1],"s2",2],[top[0],"s1",1],[top[2],"s3",3]];
+document.getElementById("podium").innerHTML = order.map(([o,c,n])=> o
+  ? `<div class="step ${c}"><div class="av">${esc(o.name[0])}</div><div class="nm">${esc(title(o.name))}</div><div class="pt">${o.pts} pts</div><div class="block">${n}º</div></div>`
+  : `<div class="step ${c} empty"><div class="av">?</div><div class="nm">Vaga aberta</div><div class="pt">—</div><div class="block">${n}º</div></div>`
+).join("");
+
+// ranking
+document.getElementById("rank").innerHTML = all.map((o,i)=>{
+  const lead = all[0].pts;
+  const M = o.pts>0 && MEDAL[o.pos] ? MEDAL[o.pos] : ["Na disputa","L0"];
+  const pct = lead>0 ? o.pts/lead*100 : 0;
+  const above = all.find(x=>x.pts>o.pts && x.pos===Math.max(...all.filter(y=>y.pts>o.pts).map(y=>y.pos)));
+  const second = all.find(x=>x.pts<o.pts);
+  let next;
+  if(o.pos===1 && o.pts>0) next = second ? `Liderando! ${o.pts-second.pts} pts à frente do 2º` : "Liderando!";
+  else if(above) next = `Faltam ${above.pts-o.pts+1} pts pra passar o ${above.pos}º lugar`;
+  else next = "Faça a 1ª execução e entre na disputa!";
+  const rows = o.list.length ? `<table>${o.list.map(r=>`<tr><td>${esc(r[0])} · ${esc(title(r[1]))} · ${esc(title(r[2]))}${r[4]!=="Aprovada"?" ("+esc(r[4])+")":""}</td><td>+${r[3]}</td></tr>`).join("")}</table>` : "Nenhuma execução ainda. Bora pontuar!";
+  return `<li><button aria-expanded="false" aria-controls="d${i}" id="b${i}">
+    <span class="pos">${o.pos}º</span>
+    <span class="who"><b>${esc(title(o.name))}</b><span class="lvl ${M[1]}">${M[0]}</span>
+      <span class="prog"><i style="width:${pct}%"></i></span><span class="next">${next}</span></span>
+    <span class="pts">${o.pts}<br><small>${o.n} exec.</small></span>
+  </button><div class="det" id="d${i}" hidden>${rows}</div></li>`;
+}).join("");
+document.getElementById("rank").addEventListener("click",e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  const d = document.getElementById("d"+b.id.slice(1));
+  const open = b.getAttribute("aria-expanded")==="true";
+  b.setAttribute("aria-expanded", String(!open)); d.hidden = open;
+});
+
+document.getElementById("upd").textContent = `Atualizado em ${UPDATED} · toque no seu nome pra ver suas execuções`;
+}
+</script>
+</body>
+</html>
