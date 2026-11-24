@@ -27,18 +27,31 @@ header::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;hei
 .logo{display:inline-flex}
 .logo img{display:block;height:46px;width:auto;filter:drop-shadow(0 1px 2px #0006)}
 footer .cred{font-weight:800;color:var(--ink);margin-bottom:4px}
+.hero{position:relative;z-index:2}
+.hero h1,.hero .sub,.hero .days,.hero .top{max-width:62%}
+.hero-art{position:absolute;inset:0;max-width:720px;margin:0 auto;pointer-events:none;z-index:1}
+.hero-art img{position:absolute;right:-4px;top:40px;height:350px;width:auto;transform:rotate(9deg);filter:drop-shadow(-10px 18px 22px #04103acc);animation:float 6s ease-in-out infinite}
+.glow{position:absolute;right:-70px;top:40px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,#ff7a1a66 0%,#ff7a1a22 40%,transparent 70%)}
+.b{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffffffcc,#7fb2ff55 45%,#ffffff10 70%);border:1px solid #ffffff55}
+.b1{width:20px;height:20px;right:118px;top:84px}.b2{width:12px;height:12px;right:8px;top:330px}.b3{width:15px;height:15px;right:128px;top:330px}
+.days{position:relative;z-index:2;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:#0b2a8099!important}
+@keyframes float{0%,100%{transform:rotate(9deg) translateY(0)}50%{transform:rotate(7deg) translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.hero-art img{animation:none}}
+@media(min-width:601px){.hero-art img{height:400px;top:30px;right:10px}.glow{right:-40px;top:20px;width:440px;height:440px}.b1{right:170px;top:60px}.b3{right:200px;top:360px}.b2{right:20px;top:400px}.hero h1,.hero .sub,.hero .days,.hero .top{max-width:60%}}
+@media(max-width:380px){h1{font-size:28px}.hero-art img{height:300px}}
+.podium{z-index:3}
 .brand{display:inline-block;background:var(--yel);color:var(--deep);font:800 14px "Baloo 2",sans-serif;padding:2px 12px;border-radius:99px}
 h1{font:800 clamp(32px,8vw,48px)/1.02 "Baloo 2",sans-serif;margin:10px 0 6px;text-wrap:balance}
 .sub{margin:0;color:#d8e3ff;font-size:16px}
 .days{margin-top:18px;background:#ffffff1f;border-radius:14px;padding:12px 14px}
-.days .row{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:700}
+.days .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 8px;font-size:14px;font-weight:700}
 .bar{height:10px;background:#ffffff30;border-radius:99px;margin-top:8px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--yel);border-radius:99px}
 .podium{margin-top:-130px;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:10px}
 .step{text-align:center}
 .av{width:58px;height:58px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font:800 22px "Baloo 2",sans-serif;background:var(--card);color:var(--blue);border:4px solid var(--yel);box-shadow:0 6px 16px #0b2a8040}
-.step .nm{font-weight:800;background:var(--card);border-radius:99px;padding:2px 8px;display:inline-block;font-size:14px;line-height:1.2;overflow-wrap:anywhere}
-.step .pt{font:800 20px "Baloo 2",sans-serif;color:var(--blue);background:var(--card);border-radius:99px;padding:0 10px;display:inline-block;margin-top:4px}
+.step .nm{display:table!important;margin:0 auto;font-weight:800;background:var(--card);border-radius:99px;padding:2px 8px;display:inline-block;font-size:14px;line-height:1.2;overflow-wrap:anywhere}
+.step .pt{font:800 20px "Baloo 2",sans-serif;color:var(--blue);background:var(--card);border-radius:99px;padding:0 10px;display:table;margin:4px auto 0}
 :root[data-theme=dark] .step .pt{color:var(--yel)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .step .pt{color:var(--yel)}}
 .block{margin-top:8px;border-radius:14px 14px 6px 6px;background:linear-gradient(180deg,var(--yel),#f4b400);color:var(--deep);font:800 28px "Baloo 2",sans-serif;display:grid;place-items:center}
@@ -84,7 +97,8 @@ footer{padding:30px 0 40px;font-size:13px;color:var(--mute);text-align:center}
 </head>
 <body>
 <header>
-  <div class="wrap">
+  <div class="hero-art" aria-hidden="true"><span class="glow"></span><span class="b b1"></span><span class="b b2"></span><span class="b b3"></span><img src="produto.png" alt="" width="260" height="631"></div>
+  <div class="wrap hero">
     <div class="top"><span class="logo"><img src="logo.png" alt="Agência Mult" width="113" height="46"></span><span class="brand">UAU Ingleza · Guanabara</span></div>
     <h1>Campanha Desengordurante UAU</h1>
     <p class="sub">Monte ponto extra, mande a foto com a senha do dia e suba no ranking!</p>
